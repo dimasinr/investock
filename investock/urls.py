@@ -22,8 +22,12 @@ from web.views import home
 
 urlpatterns = (
     [
-        path('', home.index, name='home'),
         path('admin/', admin.site.urls),
+        path('', home.index, name='home'),
+        path('login/', home.login, name='login'),
+        path('logout/', home.oidc_logout, name='logout'),
+        path('stock-tahu/', home.stock_tahu, name='stock_tahu'),
+        path('add-stock-tahu/', home.add_tahu, name='add_tahu'),
     ]
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

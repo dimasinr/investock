@@ -1,0 +1,131 @@
+{% extends "partials/base.html" %}
+{% load general_function %}
+{% block title %}
+Stock Management - Stock Tahu
+{% endblock %}
+
+{% block content %}
+<div class="py-5">
+    <div class="container">
+        <div class="flex justify-between">
+            <h1 class="font-bold">Stock Tahu</h1>
+
+            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2" id="openDialog">
+                Tambah
+            </button>
+        </div>
+
+        <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-4">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            Nama
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Harga
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Berat
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Stock
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Tanggal
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for x in object_list %}
+                        <tr class="border-b">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                            {{x.name}}
+                            </th>
+                            <td class="px-6 py-4">
+                                {{x.price|format_rupiah}}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{x.weight}}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{x.stock}}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{x.date}}
+                            </td>
+                            <td class="px-6 py-4">
+                                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <dialog id="tahuDialog" class="modal">
+            <div class="bg-white rounded-lg shadow-lg p-6 max-w-3xl w-full">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold">Tambah Tahu</h2>
+                    <button id="closeDialog" class="text-gray-600 hover:text-gray-900 focus:outline-none">&times;</button>
+                </div>
+                
+                <form method="post" action="{% url 'add_tahu' %}" id="tahuForm">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label for="name" class="block text-sm font-medium text-gray-700">Nama:</label>
+                        <input type="text" id="name" name="name" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200" style="min-width: 400px;">
+                    </div>
+        
+                    <div class="mb-4">
+                        <label for="harga" class="block text-sm font-medium text-gray-700">Harga:</label>
+                        <input type="number" id="harga" name="harga" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200" style="min-width: 400px;">
+                    </div>
+        
+                    <div class="mb-4">
+                        <label for="berat" class="block text-sm font-medium text-gray-700">Berat (kg):</label>
+                        <input type="number" id="berat" name="berat" step="0.01" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200" style="min-width: 400px;">
+                    </div>
+        
+                    <div class="mb-4">
+                        <label for="stock" class="block text-sm font-medium text-gray-700">Stok:</label>
+                        <input type="number" id="stock" name="stock" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200" style="min-width: 400px;">
+                    </div>
+        
+                    <menu class="flex justify-end">
+                        <button type="submit" class="bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-800">Kirim</button>
+                        <button type="button" id="cancelDialog" class="ml-2 bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400">Batal</button>
+                    </menu>
+                </form>
+            </div>
+        </dialog>
+        
+
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    const dialog = document.getElementById("tahuDialog");
+    const openButton = document.getElementById("openDialog");
+    const closeButton = document.getElementById("closeDialog");
+
+    // Open the dialog
+    openButton.onclick = function() {
+        dialog.showModal();
+    }
+
+    // Close the dialog
+    closeButton.onclick = function() {
+        dialog.close();
+    }
+
+    
+</script>
+{% endblock javascripts %}

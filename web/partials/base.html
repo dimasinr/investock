@@ -6,7 +6,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="{% static './icon_phln.png' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static './asasqx_53.jpg' %}" type="image/x-icon">
     <!-- TAILWIND CSS -->
     <script src="https://cdn.tailwindcss.com/3.4.0"></script>
 
@@ -324,7 +324,7 @@
                                 <div class="flex-col items-start justify-start hidden md:flex">
 
                                     <span class="text-sm font-semibold">
-                                       NAMA
+                                       Admin
                                     </span>
                                     <span class="text-xs font-semibold text-[#64748B] uppercase">
                                         ADMIN
@@ -346,7 +346,7 @@
                                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
                                     </li> -->
                                     <li>
-                                        <a href="/oidc/logout/"
+                                        <a href="{% url 'logout' %}"
                                             class="block w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-100">
                                             Logout
                                         </a>
