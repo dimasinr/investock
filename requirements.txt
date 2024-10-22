@@ -10,3 +10,4 @@ django_resized
 Pillow
 django-import-export
 requests
+libsqlite3-dev
