@@ -1,5 +1,4 @@
 {
-    "regions": ["sin1"],
     "version": 2,
     "builds": [
       {
@@ -11,7 +10,7 @@
         "src": "build.sh",
         "use": "@vercel/static-build",
         "config": {
-          "distDir": "staticfiles"
+          "distDir": "staticfiles_build"
         }
       }
     ],
