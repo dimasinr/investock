@@ -30,10 +30,22 @@
             </div>
             <hr x-show="!mainMenu2.isExpanded" class="border- border-bottom" />
 
-            {% url 'stock_tahu' as url %}
             <div class="grid gap-2">
                 <h1 x-bind:class="{'origin-left hidden': !mainMenu2.isExpanded}"
-                    class="text-sm font-medium text-black font-inter">Stock</h1>
+                class="text-sm font-medium text-black font-inter">Stock</h1>
+                
+                {% url 'stock_barang_bumbu' as url %}
+                <a href="{{url}}"
+                    x-bind:class="{'justify-center p-2': !mainMenu2.isExpanded, 'py-3 pl-3': mainMenu2.isExpanded }"
+                    class="flex items-center gap-2 py-3 pl-3 {% if request.path == url %}bg-primaryColor rounded-lg {% endif %}">
+                    <i style="font-size: 19px;"
+                    class="fi fi-rr-file-upload {% if request.path == url %} text-white {% else %} text-gray-500 {% endif %}"></i>
+                    <h1 x-bind:class="{'origin-left hidden': !mainMenu2.isExpanded}"
+                    class="text-sm font-normal {% if request.path == url %} text-white {% else %} text-gray-500 {% endif %} font-inter">
+                    Stock Barang dan Bumbu</h1>
+                </a>
+            
+                {% url 'stock_tahu' as url %}
                 <a href="{{url}}"
                     x-bind:class="{'justify-center p-2': !mainMenu2.isExpanded, 'py-3 pl-3': mainMenu2.isExpanded }"
                     class="flex items-center gap-2 {% if request.path == url %}bg-primaryColor rounded-lg {% endif %}">
@@ -54,16 +66,6 @@
                         class="text-sm font-normal {% if request.path == url %} text-white {% else %} text-gray-500 {% endif %} font-inter">
                         Stock Sotong</h1>
                 </a>
-
-                <a href="{{url}}"
-                x-bind:class="{'justify-center p-2': !mainMenu2.isExpanded, 'py-3 pl-3': mainMenu2.isExpanded }"
-                class="flex items-center gap-2 py-3 pl-3 {% if request.path == url %}bg-primaryColor rounded-lg {% endif %}">
-                <i style="font-size: 19px;"
-                    class="fi fi-rr-file-upload {% if request.path == url %} text-white {% else %} text-gray-500 {% endif %}"></i>
-                <h1 x-bind:class="{'origin-left hidden': !mainMenu2.isExpanded}"
-                    class="text-sm font-normal {% if request.path == url %} text-white {% else %} text-gray-500 {% endif %} font-inter">
-                    Stock Bumbu</h1>
-            </a>
 
             </div>
 

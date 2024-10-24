@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Employee, Product, Transaction
+from .models import Employee, Product, StockBarangBumbu, Transaction
 from import_export.admin import ImportExportModelAdmin
 
 @admin.register(Employee, site=admin.site)
@@ -19,3 +19,9 @@ class TransactionAdmin(ImportExportModelAdmin):
     list_display = ('transaction_id', 'produk', 'seller', 'quantity', 'date')
     search_fields = ('produk__name', 'seller__name') 
     ordering = ('transaction_id',)
+
+@admin.register(StockBarangBumbu, site=admin.site)
+class StockBarangBumbuAdmin(ImportExportModelAdmin):
+    list_display = ('stock_id', 'date', 'keterangan')
+    search_fields = ('keterangan',) 
+    ordering = ('stock_id',)
