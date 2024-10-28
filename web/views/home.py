@@ -4,7 +4,8 @@ from django.contrib import messages
 from django.contrib.auth import logout, authenticate
 from django.contrib.auth import authenticate, login as auth_login
 
-from dash.models import Product, StockBarangBumbu
+from dash.models import Product, RekapStockBarang, StockBarangBumbu
+from django.utils import timezone
 
 
 def login(request):
@@ -33,31 +34,57 @@ def oidc_logout(request):
     return redirect('login') 
 
 def stock_tahu(request):
-    product = Product.objects.all().order_by('name')
+    product = RekapStockBarang.objects.filter(jenis_barang=1).order_by('date')
     context = {
         'object_list' : product
     }
     return render(request, 'templates/stock/tahu.html', context=context)
 
-def add_tahu(request):
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        harga = request.POST.get('harga')
-        berat = request.POST.get('berat')
-        stock = request.POST.get('stock')
+def stock_sotong(request):
+    product = RekapStockBarang.objects.filter(jenis_barang=2).order_by('date')
+    context = {
+        'object_list' : product
+    }
+    return render(request, 'templates/stock/sotong.html', context=context)
 
-        new_tahu = Product(
-            name=name,
-            price=harga,
-            weight=berat,
+def add_rekap(request):
+    if request.method == "POST":
+        jenis_barang = request.POST.get("jenis_barang")
+        date = request.POST.get("date")
+        rekap = RekapStockBarang.objects.filter(date=date, jenis_barang=jenis_barang)
+        if rekap:
+            messages.error(request, 'Rekap Gagal ditambahkan, dikarenakan data ditanggal tersebut sudah ada!')
+            return redirect(request.META['HTTP_REFERER'])
+        
+        masuk = int(request.POST.get("masuk", 0))
+        barang_keluar = int(request.POST.get("barang_keluar", 0))
+        sisa = int(request.POST.get("sisa", 0))
+        
+        stock = masuk + sisa
+        sisa_gudang = stock - barang_keluar
+        terjual = barang_keluar - sisa
+        sisa_akhir = sisa_gudang + sisa
+
+        rekap_stock_barang = RekapStockBarang(
+            date=date or timezone.now(),
+            jenis_barang_id=jenis_barang,
+            pesanan=request.POST.get("pesanan"),
+            masuk=masuk,
             stock=stock,
+            barang_keluar=barang_keluar,
+            sisa_gudang=sisa_gudang,
+            terjual=terjual,
+            sisa=sisa,
+            sisa_akhir=sisa_akhir,
+            keterangan=request.POST.get("keterangan"),
         )
-        new_tahu.save() 
 
-        messages.success(request, 'Stock berhasil ditambahkan!')
-        return redirect('stock_tahu')
+        rekap_stock_barang.save()
 
-    return redirect('stock_tahu')
+        messages.success(request, 'Rekap berhasil ditambahkan!')
+        return redirect(request.META['HTTP_REFERER'])
+
+    return redirect(request.META['HTTP_REFERER'])
 
 def stock_barang_bumbu(request):
     stock = StockBarangBumbu.objects.all()

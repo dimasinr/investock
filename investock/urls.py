@@ -27,7 +27,8 @@ urlpatterns = (
         path('login/', home.login, name='login'),
         path('logout/', home.oidc_logout, name='logout'),
         path('stock-tahu/', home.stock_tahu, name='stock_tahu'),
-        path('add-stock-tahu/', home.add_tahu, name='add_tahu'),
+        path('stock-sotong/', home.stock_sotong, name='stock_sotong'),
+        path('add-rekap/', home.add_rekap, name='add_rekap'),
         path('stock-barang-bumbu/', home.stock_barang_bumbu, name='stock_barang_bumbu'),
         path('add-stock-barang-bumbu/', home.add_stock_barang_bumbu, name='add_stock_barang_bumbu'),
         

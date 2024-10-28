@@ -10,6 +10,10 @@ def format_rupiah(amount):
     return locale.currency(amount, symbol='Rp', grouping=True)
 
 @register.filter
+def format_angka(angka):
+    return "{:,.0f}".format(angka)
+
+@register.filter
 def convert_date(tanggal_str):
     if isinstance(tanggal_str, str):
         tanggal = datetime.datetime.strptime(tanggal_str, "%b. %d, %Y, %I:%M %p")
