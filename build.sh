@@ -1,6 +1,6 @@
 echo "Building project packages..."
-sudo apt-get update
-sudo apt-get install sqlite3 libsqlite3-dev
+apt-get update
+apt-get install sqlite3 libsqlite3-dev
 echo "Installing project requirements..."
 python3 -m pip install -r requirements.txt
 python3 manage.py runserver
